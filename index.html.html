@@ -1,0 +1,1762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Rhythm! 🎉</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff6b9d, #c44569, #f8b500, #48c9b0);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Hearts */
+        .heart {
+            position: fixed;
+            font-size: 2rem;
+            animation: floatHeart 8s ease-in infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                bottom: -50px;
+                opacity: 1;
+                transform: translateX(0) rotate(0deg);
+            }
+            100% {
+                bottom: 110%;
+                opacity: 0;
+                transform: translateX(100px) rotate(360deg);
+            }
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.95);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        .nav-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Pages */
+        .page {
+            min-height: 100vh;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 20px 20px;
+        }
+
+        .page.active {
+            display: flex;
+        }
+
+        /* HOME PAGE */
+        .home-content {
+            text-align: center;
+            max-width: 900px;
+        }
+
+        h1 {
+            font-size: 4rem;
+            color: #fff;
+            text-shadow: 3px 3px 10px rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+        }
+
+        .interactive-cake {
+            font-size: 10rem;
+            cursor: pointer;
+            display: inline-block;
+            transition: transform 0.3s;
+            animation: float 3s ease-in-out infinite;
+            margin: 30px 0;
+        }
+
+        .interactive-cake:hover {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .button {
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        .button:active {
+            transform: scale(0.95);
+        }
+
+        /* COUNTDOWN TIMER */
+        .countdown {
+            background: rgba(255,255,255,0.95);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px auto;
+            max-width: 600px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .countdown h3 {
+            color: #f5576c;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .timer {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .time-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            min-width: 100px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .time-box .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .time-box .label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* QUIZ PAGE */
+        .quiz-container {
+            background: rgba(255,255,255,0.95);
+            padding: 50px;
+            border-radius: 20px;
+            max-width: 700px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .quiz-container h2 {
+            color: #f5576c;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .question {
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .question.active {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .question h3 {
+            color: #667eea;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .answers {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .answer-btn {
+            background: white;
+            border: 3px solid #667eea;
+            padding: 15px 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            text-align: left;
+        }
+
+        .answer-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(10px);
+        }
+
+        .quiz-result {
+            text-align: center;
+            display: none;
+        }
+
+        .quiz-result.show {
+            display: block;
+        }
+
+        .quiz-result h3 {
+            color: #f5576c;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        /* BIRTHDAY PLANNER */
+        .planner-container {
+            background: rgba(255,255,255,0.95);
+            padding: 50px;
+            border-radius: 20px;
+            max-width: 900px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .planner-container h2 {
+            color: #f5576c;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .planner-intro {
+            text-align: center;
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .category {
+            margin-bottom: 40px;
+        }
+
+        .category h3 {
+            color: #667eea;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .option-card {
+            background: white;
+            border: 3px solid #e0e0e0;
+            padding: 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .option-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .option-card.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            transform: scale(1.05);
+        }
+
+        .option-icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .option-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .option-desc {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .planner-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .plan-summary {
+            display: none;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 30px;
+        }
+
+        .plan-summary.show {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .plan-summary h3 {
+            color: #f5576c;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .summary-item {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .summary-icon {
+            font-size: 2rem;
+        }
+
+        .summary-text {
+            flex: 1;
+        }
+
+        .summary-category {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .summary-choice {
+            color: #555;
+        }
+
+        /* MUSIC PLAYER */
+        .music-player {
+            background: rgba(255,255,255,0.95);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 500px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .music-player h2 {
+            color: #f5576c;
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .playlist {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .song {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .song:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .song-icon {
+            font-size: 1.5rem;
+        }
+
+        /* LOVE LETTERS */
+        .letters-container {
+            background: rgba(255,255,255,0.95);
+            padding: 50px;
+            border-radius: 20px;
+            max-width: 900px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow-y: auto;
+            max-height: 85vh;
+        }
+
+        .letters-container h2 {
+            color: #f5576c;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .letters-nav {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .letter-tab {
+            background: white;
+            border: 3px solid #667eea;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s;
+            color: #667eea;
+        }
+
+        .letter-tab:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .letter-tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .letter {
+            display: none;
+            background: linear-gradient(135deg, #fff9e6 0%, #ffe9d6 100%);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            border: 2px solid #f5d76e;
+        }
+
+        .letter.active {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .letter-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px dashed #f5d76e;
+        }
+
+        .letter-title {
+            font-size: 2rem;
+            color: #f5576c;
+            margin-bottom: 10px;
+            font-family: 'Brush Script MT', cursive;
+        }
+
+        .letter-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .letter-content {
+            font-size: 1.2rem;
+            line-height: 2;
+            color: #333;
+            font-family: 'Courier New', monospace;
+            text-align: justify;
+            margin-bottom: 30px;
+        }
+
+        .letter-content p {
+            margin-bottom: 20px;
+        }
+
+        .letter-signature {
+            text-align: right;
+            font-size: 1.5rem;
+            color: #f5576c;
+            font-family: 'Brush Script MT', cursive;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px dashed #f5d76e;
+        }
+
+        .hearts-decoration {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            opacity: 0.3;
+        }
+
+        /* MEMORY GAME */
+        .memory-game {
+            background: rgba(255,255,255,0.95);
+            padding: 50px;
+            border-radius: 20px;
+            max-width: 700px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .memory-game h2 {
+            color: #f5576c;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .card {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card.flipped {
+            background: white;
+        }
+
+        .card.matched {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            pointer-events: none;
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* Celebration Message */
+        .celebration-msg {
+            background: rgba(255,255,255,0.95);
+            padding: 25px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            font-size: 1.5rem;
+            color: #f5576c;
+            font-weight: bold;
+            animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            margin: 10px auto;
+            max-width: 600px;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Firework */
+        .firework {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            animation: explode 1s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* Balloon rising */
+        .rising-balloon {
+            position: fixed;
+            font-size: 3rem;
+            animation: rise 4s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes rise {
+            0% {
+                bottom: -50px;
+                opacity: 1;
+            }
+            100% {
+                bottom: 110%;
+                opacity: 0;
+            }
+        }
+
+        /* Sparkle effect */
+        .sparkle {
+            position: fixed;
+            font-size: 2rem;
+            animation: sparkleAnim 1.5s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes sparkleAnim {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5) rotate(180deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            z-index: 5;
+            animation: fall 3s linear;
+        }
+
+        @keyframes fall {
+            to {
+                top: 100vh;
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .subtitle { font-size: 1.3rem; }
+            .interactive-cake { font-size: 6rem; }
+            .quiz-container, .letters-container, .memory-game { padding: 30px; }
+            .game-board { grid-template-columns: repeat(3, 1fr); }
+            .nav { top: 10px; right: 10px; }
+            .letter-content { font-size: 1rem; line-height: 1.8; }
+            .letter-tab { padding: 10px 15px; font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <div class="nav">
+        <button class="nav-btn" onclick="showPage('home')">🏠 Home</button>
+        <button class="nav-btn" onclick="showPage('quiz')">🎯 Quiz</button>
+        <button class="nav-btn" onclick="showPage('planner')">📋 Plan</button>
+        <button class="nav-btn" onclick="showPage('music')">🎵 Music</button>
+        <button class="nav-btn" onclick="showPage('letters')">💌 Letters</button>
+        <button class="nav-btn" onclick="showPage('game')">🎮 Game</button>
+    </div>
+
+    <!-- HOME PAGE -->
+    <div class="page active" id="home">
+        <div class="home-content">
+            <h1>🎊 Happy Birthday Rhythm! 🎊</h1>
+            <p class="subtitle">Get ready for an amazing interactive celebration!</p>
+            
+            <div class="interactive-cake" onclick="blowCandles()">🎂</div>
+            <p style="color: white; font-size: 1.2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Click the cake to blow the candles!</p>
+            
+            <div class="countdown">
+                <h3>🎉 Time Since Your Birthday Began 🎉</h3>
+                <div class="timer" id="timer">
+                    <div class="time-box">
+                        <span class="number" id="hours">00</span>
+                        <span class="label">Hours</span>
+                    </div>
+                    <div class="time-box">
+                        <span class="number" id="minutes">00</span>
+                        <span class="label">Minutes</span>
+                    </div>
+                    <div class="time-box">
+                        <span class="number" id="seconds">00</span>
+                        <span class="label">Seconds</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="button" onclick="megaCelebration()">🎉 Celebrate!</button>
+                <button class="button" onclick="showPage('planner')">📋 Plan Day</button>
+                <button class="button" onclick="showPage('letters')">💌 Love Letters</button>
+                <button class="button" onclick="showPage('game')">🎮 Play Game</button>
+            </div>
+            
+            <div id="celebrationMessages" style="margin-top: 30px; min-height: 60px;"></div>
+        </div>
+    </div>
+
+    <!-- BIRTHDAY PLANNER PAGE -->
+    <div class="page" id="planner">
+        <div class="planner-container">
+            <h2>🎊 Plan Your Perfect Birthday! 🎊</h2>
+            <p class="planner-intro">Choose your ideal celebration style - pick one from each category!</p>
+            
+            <!-- Morning Activity -->
+            <div class="category">
+                <h3>🌅 Morning Vibes</h3>
+                <div class="options-grid">
+                    <div class="option-card" onclick="selectOption('morning', 'cp', this)">
+                        <span class="option-icon">☕</span>
+                        <div class="option-title">Cozy Breakfast at C.P.</div>
+                        <div class="option-desc">Start the day with coffee & good vibes</div>
+                    </div>
+                    <div class="option-card" onclick="selectOption('morning', 'spa', this)">
+                        <span class="option-icon">💆‍♀️</span>
+                        <div class="option-title">Couple Spa @ 1 PM</div>
+                        <div class="option-desc">Relaxing spa session at Kirti Nagar</div>
+                    </div>
+                    <div class="option-card" onclick="selectOption('morning', 'bed', this)">
+                        <span class="option-icon">🛏️</span>
+                        <div class="option-title">Breakfast in Bed</div>
+                        <div class="option-desc">Surprise delivery from me! (Need Mamta's number 😊)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Afternoon Activity -->
+            <div class="category">
+                <h3>☀️ Afternoon Fun</h3>
+                <div class="options-grid">
+                    <div class="option-card" onclick="selectOption('afternoon', 'shopping', this)">
+                        <span class="option-icon">🛍️</span>
+                        <div class="option-title">Shopping Date</div>
+                        <div class="option-desc">Let's shop till we drop together!</div>
+                    </div>
+                    <div class="option-card" onclick="selectOption('afternoon', 'arcade', this)">
+                        <span class="option-icon">🎮</span>
+                        <div class="option-title">Arcade Date</div>
+                        <div class="option-desc">Games, fun & lots of laughter</div>
+                    </div>
+                    <div class="option-card" onclick="selectOption('afternoon', 'movie', this)">
+                        <span class="option-icon">🎬</span>
+                        <div class="option-title">Movie Date</div>
+                        <div class="option-desc">Popcorn, movies & cuddles</div>
+                    </div>
+                    <div class="option-card" onclick="selectOption('afternoon', 'dev', this)">
+                        <span class="option-icon">😏</span>
+                        <div class="option-title">Dev Place</div>
+                        <div class="option-desc">So you can miss your date 😉</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Evening Celebration -->
+            <div class="category">
+                <h3>🌙 Evening Celebration (Around 5 PM)</h3>
+                <div class="options-grid">
+                    <div class="option-card" onclick="selectOption('evening', 'dinner', this)">
+                        <span class="option-icon">🍽️</span>
+                        <div class="option-title">Romantic Dinner</div>
+                        <div class="option-desc">Candles, music & delicious food</div>
+                    </div>
+                    <div class="option-card" onclick="selectOption('evening', 'rooftop', this)">
+                        <span class="option-icon">🌆</span>
+                        <div class="option-title">Rooftop Celebration</div>
+                        <div class="option-desc">Sunset views with special setup</div>
+                    </div>
+                    <div class="option-card" onclick="selectOption('evening', 'party', this)">
+                        <span class="option-icon">🎉</span>
+                        <div class="option-title">Surprise Party</div>
+                        <div class="option-desc">Friends, cake & celebration time!</div>
+                    </div>
+                    <div class="option-card" onclick="selectOption('evening', 'cozy', this)">
+                        <span class="option-icon">🕯️</span>
+                        <div class="option-title">Cozy Home Evening</div>
+                        <div class="option-desc">Just us, cake & quality time</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cake Style -->
+            <div class="category">
+                <h3>🎂 Cake Choice</h3>
+                <div class="options-grid">
+                    <div class="option-card" onclick="selectOption('cake', 'elegant', this)">
+                        <span class="option-icon">👑</span>
+                        <div class="option-title">Elegant Multi-Tier</div>
+                        <div class="option-desc">Fancy fondant masterpiece</div>
+                    </div>
+                    <div class="option-card" onclick="selectOption('cake', 'chocolate', this)">
+                        <span class="option-icon">🍫</span>
+                        <div class="option-title">Chocolate Heaven</div>
+                        <div class="option-desc">Rich chocolate indulgence</div>
+                    </div>
+                    <div class="option-card" onclick="selectOption('cake', 'fruit', this)">
+                        <span class="option-icon">🍓</span>
+                        <div class="option-title">Fresh Fruit</div>
+                        <div class="option-desc">Light & fruity layers</div>
+                    </div>
+                    <div class="option-card" onclick="selectOption('cake', 'custom', this)">
+                        <span class="option-icon">🎨</span>
+                        <div class="option-title">Custom Design</div>
+                        <div class="option-desc">Unique themed creation</div>
+                    </div>
+                    <div class="option-card" onclick="selectOption('cake', 'cupcakes', this)">
+                        <span class="option-icon">🧁</span>
+                        <div class="option-title">Cupcake Tower</div>
+                        <div class="option-desc">Variety of mini treats</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Guest List -->
+            <div class="category">
+                <h3>👥 Who's Invited?</h3>
+                <div class="options-grid">
+                    <div class="option-card" onclick="selectOption('guests', 'intimate', this)">
+                        <span class="option-icon">💕</span>
+                        <div class="option-title">Intimate Circle</div>
+                        <div class="option-desc">Just closest friends (5-10)</div>
+                    </div>
+                    <div class="option-card" onclick="selectOption('guests', 'medium', this)">
+                        <span class="option-icon">🎊</span>
+                        <div class="option-title">Medium Group</div>
+                        <div class="option-desc">Good friends (15-30)</div>
+                    </div>
+                    <div class="option-card" onclick="selectOption('guests', 'big', this)">
+                        <span class="option-icon">🎉</span>
+                        <div class="option-title">Big Bash</div>
+                        <div class="option-desc">Everyone! (50+)</div>
+                    </div>
+                    <div class="option-card" onclick="selectOption('guests', 'solo', this)">
+                        <span class="option-icon">✨</span>
+                        <div class="option-title">Solo Celebration</div>
+                        <div class="option-desc">Me-time & self-care</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dress Code -->
+            <div class="category">
+                <h3>👗 What to Wear?</h3>
+                <div class="options-grid">
+                    <div class="option-card" onclick="selectOption('dress', 'formal', this)">
+                        <span class="option-icon">👠</span>
+                        <div class="option-title">Glamorous</div>
+                        <div class="option-desc">Full glam, formal attire</div>
+                    </div>
+                    <div class="option-card" onclick="selectOption('dress', 'cocktail', this)">
+                        <span class="option-icon">💃</span>
+                        <div class="option-title">Cocktail Chic</div>
+                        <div class="option-desc">Stylish but comfortable</div>
+                    </div>
+                    <div class="option-card" onclick="selectOption('dress', 'casual', this)">
+                        <span class="option-icon">👕</span>
+                        <div class="option-title">Casual Cool</div>
+                        <div class="option-desc">Relaxed & comfy</div>
+                    </div>
+                    <div class="option-card" onclick="selectOption('dress', 'theme', this)">
+                        <span class="option-icon">🎭</span>
+                        <div class="option-title">Themed Costume</div>
+                        <div class="option-desc">Fun themed outfits</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="planner-actions">
+                <button class="button" onclick="generatePlan()">✨ Create My Plan!</button>
+                <button class="button" onclick="resetPlanner()" style="background: linear-gradient(45deg, #95e1d3, #4ecdc4);">🔄 Start Over</button>
+            </div>
+
+            <div class="plan-summary" id="planSummary"></div>
+        </div>
+    </div>
+
+    <!-- QUIZ PAGE -->
+    <div class="page" id="quiz">
+        <div class="quiz-container">
+            <h2>🎯 Birthday Quiz!</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 30px;">How well do you know yourself? Let's find out!</p>
+            
+            <div class="question active" data-question="1">
+                <h3>1. What's your perfect birthday celebration?</h3>
+                <div class="answers">
+                    <button class="answer-btn" onclick="nextQuestion(2)">🎉 Big party with friends</button>
+                    <button class="answer-btn" onclick="nextQuestion(2)">🌴 Quiet getaway</button>
+                    <button class="answer-btn" onclick="nextQuestion(2)">🍰 Intimate dinner</button>
+                    <button class="answer-btn" onclick="nextQuestion(2)">🎢 Adventure activities</button>
+                </div>
+            </div>
+
+            <div class="question" data-question="2">
+                <h3>2. What's your favorite type of cake?</h3>
+                <div class="answers">
+                    <button class="answer-btn" onclick="nextQuestion(3)">🍫 Chocolate</button>
+                    <button class="answer-btn" onclick="nextQuestion(3)">🍓 Strawberry</button>
+                    <button class="answer-btn" onclick="nextQuestion(3)">🍋 Vanilla</button>
+                    <button class="answer-btn" onclick="nextQuestion(3)">🎂 Red Velvet</button>
+                </div>
+            </div>
+
+            <div class="question" data-question="3">
+                <h3>3. What makes you happiest?</h3>
+                <div class="answers">
+                    <button class="answer-btn" onclick="showQuizResult()">❤️ Time with loved ones</button>
+                    <button class="answer-btn" onclick="showQuizResult()">🎨 Creative projects</button>
+                    <button class="answer-btn" onclick="showQuizResult()">🌟 Achieving goals</button>
+                    <button class="answer-btn" onclick="showQuizResult()">😊 Making others smile</button>
+                </div>
+            </div>
+
+            <div class="quiz-result">
+                <h3>🎊 You're Amazing! 🎊</h3>
+                <p style="font-size: 1.3rem; color: #666; line-height: 1.8;">Your answers show you're someone who values joy, connection, and making every moment count. That's what makes you so special! ✨</p>
+                <button class="button" onclick="resetQuiz()" style="margin-top: 30px;">🔄 Take Again</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MUSIC PAGE -->
+    <div class="page" id="music">
+        <div class="music-player">
+            <h2>🎵 Birthday Playlist</h2>
+            <p style="color: #666; margin-bottom: 30px;">Your favorite vibes for today!</p>
+            <div class="playlist">
+                <div class="song" onclick="playSong('Happy Birthday')">
+                    <span class="song-icon">🎂</span>
+                    <span>Happy Birthday (Classic)</span>
+                </div>
+                <div class="song" onclick="playSong('Celebration')">
+                    <span class="song-icon">🎉</span>
+                    <span>Celebration Time</span>
+                </div>
+                <div class="song" onclick="playSong('Dance')">
+                    <span class="song-icon">💃</span>
+                    <span>Dance All Night</span>
+                </div>
+                <div class="song" onclick="playSong('Feel Good')">
+                    <span class="song-icon">😊</span>
+                    <span>Feel Good Hits</span>
+                </div>
+                <div class="song" onclick="playSong('Party')">
+                    <span class="song-icon">🎊</span>
+                    <span>Party Anthems</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOVE LETTERS PAGE -->
+    <div class="page" id="letters">
+        <div class="letters-container">
+            <h2>💌 Love Letters for Gungun</h2>
+            
+            <div class="letters-nav">
+                <button class="letter-tab active" onclick="showLetter(1)">Letter 1</button>
+                <button class="letter-tab" onclick="showLetter(2)">Letter 2</button>
+                <button class="letter-tab" onclick="showLetter(3)">Letter 3</button>
+                <button class="letter-tab" onclick="showLetter(4)">Letter 4</button>
+                <button class="letter-tab" onclick="showLetter(5)">Letter 5</button>
+            </div>
+
+            <!-- Letter 1: Why I Love Gungun -->
+            <div class="letter active" id="letter1">
+                <div class="hearts-decoration">💕💖💗</div>
+                <div class="letter-header">
+                    <div class="letter-title">Why I Love Gungun</div>
+                    <div class="letter-subtitle">A letter from the heart</div>
+                </div>
+                <div class="letter-content">
+                    <p>My Dearest Gungun,</p>
+                    <p>Where do I even begin? Loving you is like breathing - it comes so naturally, so effortlessly, that I can't imagine my life without it. Every single day with you feels like a gift I never knew I needed.</p>
+                    <p>I love the way you light up a room with your smile, how your laughter is contagious and fills my heart with pure joy. I love your kindness, the way you care for everyone around you, making the world a better place just by being in it.</p>
+                    <p>I love your strength, your determination, and how you face every challenge with grace. I love your quirks, your silly moments, and even the way you scrunch your nose when you're thinking hard about something.</p>
+                    <p>But most of all, I love how you make me want to be a better person every single day. With you, I've discovered a love so deep, so true, that it fills every corner of my soul.</p>
+                    <p>You are my sunshine, my comfort, my home. I love you more than words could ever express.</p>
+                </div>
+                <div class="letter-signature">Forever Yours ❤️</div>
+            </div>
+
+            <!-- Letter 2: Why Gungun is the Best -->
+            <div class="letter" id="letter2">
+                <div class="hearts-decoration">🌟✨💫</div>
+                <div class="letter-header">
+                    <div class="letter-title">Why Gungun is the Best</div>
+                    <div class="letter-subtitle">You're simply extraordinary</div>
+                </div>
+                <div class="letter-content">
+                    <p>My Amazing Gungun,</p>
+                    <p>You are, without a doubt, the most incredible person I've ever met. It's not just one thing that makes you the best - it's everything about you, woven together to create someone truly extraordinary.</p>
+                    <p>You're the best because of your compassionate heart that feels deeply for others. You're the best because you always know how to make me smile, even on my worst days. Your intelligence, your wit, your creativity - they all combine to create someone absolutely unique.</p>
+                    <p>You're the best partner anyone could ask for - understanding, supportive, and always there when I need you. You make the ordinary moments feel magical and the difficult moments feel bearable.</p>
+                    <p>The way you pursue your dreams inspires me. The way you love inspires me. The way you exist in this world makes it a better place. You're not just the best to me - you're genuinely one of the best humans this world has.</p>
+                    <p>Never forget how amazing you are, because you truly are THE BEST!</p>
+                </div>
+                <div class="letter-signature">Your Biggest Fan 🌟</div>
+            </div>
+
+            <!-- Letter 3: Why Gungun Will Be Loved By Me -->
+            <div class="letter" id="letter3">
+                <div class="hearts-decoration">♾️💝💞</div>
+                <div class="letter-header">
+                    <div class="letter-title">Why Gungun Will Be Loved By Me</div>
+                    <div class="letter-subtitle">Today, tomorrow, and always</div>
+                </div>
+                <div class="letter-content">
+                    <p>My Forever Love,</p>
+                    <p>I want you to know that my love for you isn't just for today or tomorrow - it's for always. Let me tell you why you'll be loved by me for the rest of our lives.</p>
+                    <p>Because you are my person - the one I want to share every sunrise and sunset with. Because when I think about the future, every single dream I have includes you by my side.</p>
+                    <p>You'll be loved by me because you've shown me what true partnership means. You've taught me that love isn't just a feeling, it's a choice we make every single day, and I choose you every time.</p>
+                    <p>Through every season of life - the joyful springs, the comfortable summers, the changing autumns, and even the challenging winters - I will be there, loving you with all my heart.</p>
+                    <p>When we're old and gray, I'll still look at you the way I do now - with wonder, gratitude, and endless love. You'll be loved by me because you are irreplaceable, unforgettable, and absolutely essential to my happiness.</p>
+                    <p>This is my promise, my commitment, my forever vow to you.</p>
+                </div>
+                <div class="letter-signature">Always & Forever 💕</div>
+            </div>
+
+            <!-- Letter 4: Why Gungun is Special -->
+            <div class="letter" id="letter4">
+                <div class="hearts-decoration">🎁💎✨</div>
+                <div class="letter-header">
+                    <div class="letter-title">Why Gungun is Special</div>
+                    <div class="letter-subtitle">You're one in a million</div>
+                </div>
+                <div class="letter-content">
+                    <p>My Special Gungun,</p>
+                    <p>In a world of billions, there is only one you, and that makes you infinitely special. Your uniqueness isn't just in what you do, but in who you fundamentally are.</p>
+                    <p>You're special in the way you see the world - with curiosity, wonder, and an open heart. You notice the little things that others miss, finding beauty in everyday moments that most people overlook.</p>
+                    <p>Your empathy is special - the way you can sense when someone needs comfort, when I need space, or when the moment calls for celebration. You have this incredible gift of emotional intelligence that makes everyone around you feel seen and heard.</p>
+                    <p>What makes you truly special is the combination of your qualities that can't be found in anyone else. Your specific laugh, your particular way of thinking, your unique perspective on life - these are irreplaceable.</p>
+                    <p>You've left an imprint on my soul that no one else could ever make. You're not special just because I love you - I love you because you're special.</p>
+                </div>
+                <div class="letter-signature">In Awe of You 💫</div>
+            </div>
+
+            <!-- Letter 5: My Everything -->
+            <div class="letter" id="letter5">
+                <div class="hearts-decoration">🌍💗🏠</div>
+                <div class="letter-header">
+                    <div class="letter-title">You Are My Everything</div>
+                    <div class="letter-subtitle">The reason behind my smiles</div>
+                </div>
+                <div class="letter-content">
+                    <p>My Everything,</p>
+                    <p>Gungun, you are not just a part of my life - you ARE my life. You're my first thought in the morning and my last thought before sleep. You're the reason I smile, the source of my happiness, and the foundation of my peace.</p>
+                    <p>You're my best friend, my confidant, my partner in crime, and my partner in life. When I'm with you, I'm home. No matter where we are, if you're there, I'm exactly where I belong.</p>
+                    <p>You're my motivation when I'm tired, my comfort when I'm sad, my celebration when I'm happy, and my strength when I'm weak. You complete me in ways I never knew I needed completion.</p>
+                    <p>Every plan I make, every goal I set, every dream I dream - they all include you. Because what's the point of any of it if I can't share it with you?</p>
+                    <p>You are my everything because without you, nothing else seems to matter quite as much. With you, everything becomes possible, beautiful, and meaningful.</p>
+                    <p>Thank you for being my everything. I love you more than infinity.</p>
+                </div>
+                <div class="letter-signature">All My Love, Always 💖</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MEMORY GAME PAGE -->
+    <div class="page" id="game">
+        <div class="memory-game">
+            <h2>🎮 Memory Match Game</h2>
+            <div class="game-info">
+                <div>Moves: <span id="moves">0</span></div>
+                <div>Matches: <span id="matches">0</span>/8</div>
+            </div>
+            <div class="game-board" id="gameBoard"></div>
+            <button class="button" onclick="resetGame()" style="margin-top: 30px; width: 100%;">🔄 New Game</button>
+        </div>
+    </div>
+
+    <script>
+        const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#ffd93d', '#ff6bcb', '#95e1d3'];
+        
+        // Birthday date - Rhythm's Birthday: December 28, 2025
+        const BIRTHDAY_DATE = new Date('2025-12-28T00:00:00'); // Format: YYYY-MM-DDTHH:MM:SS
+        
+        // Check if birthday has started
+        function isBirthdayStarted() {
+            return new Date() >= BIRTHDAY_DATE;
+        }
+        
+        // Show locked message
+        function showLockedMessage() {
+            const now = new Date();
+            const timeUntil = BIRTHDAY_DATE - now;
+            const days = Math.floor(timeUntil / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeUntil % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeUntil % (1000 * 60 * 60)) / (1000 * 60));
+            
+            alert(`🎂 This feature unlocks when the birthday starts! 🎂\n\nTime remaining: ${days}d ${hours}h ${minutes}m\n\nCome back on ${BIRTHDAY_DATE.toLocaleDateString()} at midnight! 🎉`);
+        }
+        
+        // Create floating hearts
+        function createHearts() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = ['❤️', '💕', '💖', '💗', '💙'][Math.floor(Math.random() * 5)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (5 + Math.random() * 3) + 's';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 8000);
+            }, 2000);
+        }
+
+        // Timer
+        function updateTimer() {
+            const now = new Date();
+            const birthdayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            
+            // If birthday hasn't started yet, show countdown TO birthday
+            if (now < BIRTHDAY_DATE) {
+                const diff = BIRTHDAY_DATE - now;
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                document.querySelector('.countdown h3').textContent = '⏰ Time Until Birthday Begins ⏰';
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+            } else {
+                // Birthday has started, show time since birthday began
+                const diff = now - birthdayStart;
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                document.querySelector('.countdown h3').textContent = '🎉 Time Since Your Birthday Began 🎉';
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+            }
+        }
+
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        // Page navigation
+        function showPage(pageId) {
+            // Check if trying to access interactive pages before birthday
+            if (!isBirthdayStarted() && pageId !== 'home') {
+                showLockedMessage();
+                return;
+            }
+            
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // Letter navigation
+        function showLetter(letterNum) {
+            if (!isBirthdayStarted()) {
+                showLockedMessage();
+                return;
+            }
+            
+            document.querySelectorAll('.letter').forEach(letter => {
+                letter.classList.remove('active');
+            });
+            document.querySelectorAll('.letter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById('letter' + letterNum).classList.add('active');
+            event.target.classList.add('active');
+            launchConfetti();
+        }
+
+        // Confetti
+        function launchConfetti() {
+            for (let i = 0; i < 150; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 5000);
+                }, i * 30);
+            }
+        }
+
+        // Fireworks effect
+        function createFirework(x, y) {
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#ffd93d', '#ff6bcb', '#95e1d3'];
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                firework.style.left = x + 'px';
+                firework.style.top = y + 'px';
+                firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                const angle = (Math.PI * 2 * i) / particleCount;
+                const velocity = 100 + Math.random() * 100;
+                const tx = Math.cos(angle) * velocity;
+                const ty = Math.sin(angle) * velocity;
+                
+                firework.style.setProperty('--tx', tx + 'px');
+                firework.style.setProperty('--ty', ty + 'px');
+                firework.style.animation = `explode 1s ease-out forwards`;
+                firework.style.transform = `translate(${tx}px, ${ty}px)`;
+                
+                document.body.appendChild(firework);
+                setTimeout(() => firework.remove(), 1000);
+            }
+        }
+
+        // Rising balloons
+        function launchBalloons() {
+            const balloonEmojis = ['🎈', '🎈', '🎈', '🎉', '🎊', '🎁'];
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const balloon = document.createElement('div');
+                    balloon.className = 'rising-balloon';
+                    balloon.textContent = balloonEmojis[Math.floor(Math.random() * balloonEmojis.length)];
+                    balloon.style.left = Math.random() * 100 + '%';
+                    balloon.style.animationDuration = (3 + Math.random() * 2) + 's';
+                    document.body.appendChild(balloon);
+                    setTimeout(() => balloon.remove(), 4000);
+                }, i * 200);
+            }
+        }
+
+        // Sparkles
+        function createSparkles() {
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    sparkle.textContent = '✨';
+                    sparkle.style.left = Math.random() * 100 + '%';
+                    sparkle.style.top = Math.random() * 100 + '%';
+                    document.body.appendChild(sparkle);
+                    setTimeout(() => sparkle.remove(), 1500);
+                }, i * 100);
+            }
+        }
+
+        // Celebration messages
+        const celebrationMessages = [
+            "🎉 You're Absolutely Amazing! 🎉",
+            "✨ Another Year of Being Wonderful! ✨",
+            "🌟 Shine Bright Today! 🌟",
+            "💖 You Deserve All The Happiness! 💖",
+            "🎊 Make This Year Unforgettable! 🎊",
+            "🎂 Best Birthday Ever! 🎂",
+            "💫 You Light Up Every Room! 💫",
+            "🎈 Celebrate You Today! 🎈",
+            "⭐ You're One In A Million! ⭐",
+            "🎁 The Best Gift Is YOU! 🎁"
+        ];
+
+        let celebrationCount = 0;
+
+        function megaCelebration() {
+            if (!isBirthdayStarted()) {
+                showLockedMessage();
+                return;
+            }
+            
+            celebrationCount++;
+            
+            // Launch everything!
+            launchConfetti();
+            launchBalloons();
+            createSparkles();
+            
+            // Random fireworks
+            setTimeout(() => {
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => {
+                        const x = Math.random() * window.innerWidth;
+                        const y = Math.random() * window.innerHeight * 0.7;
+                        createFirework(x, y);
+                    }, i * 300);
+                }
+            }, 500);
+            
+            // Show celebration message
+            const msgContainer = document.getElementById('celebrationMessages');
+            const msg = document.createElement('div');
+            msg.className = 'celebration-msg';
+            msg.textContent = celebrationMessages[Math.floor(Math.random() * celebrationMessages.length)];
+            msgContainer.innerHTML = '';
+            msgContainer.appendChild(msg);
+            
+            // Add click counter message
+            if (celebrationCount === 5) {
+                setTimeout(() => {
+                    const bonus = document.createElement('div');
+                    bonus.className = 'celebration-msg';
+                    bonus.textContent = "🏆 5 Celebrations! You're On Fire! 🏆";
+                    bonus.style.background = 'linear-gradient(45deg, #ffd700, #ffed4e)';
+                    msgContainer.appendChild(bonus);
+                }, 1000);
+            } else if (celebrationCount === 10) {
+                setTimeout(() => {
+                    const bonus = document.createElement('div');
+                    bonus.className = 'celebration-msg';
+                    bonus.textContent = "👑 10 Celebrations! Birthday Royalty! 👑";
+                    bonus.style.background = 'linear-gradient(45deg, #9b59b6, #e74c3c)';
+                    msgContainer.appendChild(bonus);
+                }, 1000);
+            }
+            
+            // Clear message after 4 seconds
+            setTimeout(() => {
+                msg.style.animation = 'popIn 0.3s reverse';
+                setTimeout(() => msg.remove(), 300);
+            }, 4000);
+        }
+
+        function blowCandles() {
+            if (!isBirthdayStarted()) {
+                showLockedMessage();
+                return;
+            }
+            
+            const cake = document.querySelector('.interactive-cake');
+            cake.textContent = '🍰';
+            launchConfetti();
+            setTimeout(() => {
+                cake.textContent = '🎂';
+            }, 3000);
+        }
+
+        // Quiz
+        let currentQuestion = 1;
+
+        function nextQuestion(questionNum) {
+            if (!isBirthdayStarted()) {
+                showLockedMessage();
+                return;
+            }
+            
+            document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+            document.querySelector(`[data-question="${questionNum}"]`).classList.add('active');
+            currentQuestion = questionNum;
+        }
+
+        function showQuizResult() {
+            if (!isBirthdayStarted()) {
+                showLockedMessage();
+                return;
+            }
+            
+            document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+            document.querySelector('.quiz-result').classList.add('show');
+            launchConfetti();
+        }
+
+        function resetQuiz() {
+            if (!isBirthdayStarted()) {
+                showLockedMessage();
+                return;
+            }
+            
+            document.querySelector('.quiz-result').classList.remove('show');
+            document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+            document.querySelector('[data-question="1"]').classList.add('active');
+            currentQuestion = 1;
+        }
+
+        // Birthday Planner
+        let birthdayPlan = {
+            morning: null,
+            afternoon: null,
+            evening: null,
+            cake: null,
+            guests: null,
+            dress: null
+        };
+
+        const planDetails = {
+            morning: {
+                cp: { icon: '☕', title: 'Cozy Breakfast at C.P.', desc: 'Start with coffee & good vibes at Connaught Place' },
+                spa: { icon: '💆‍♀️', title: 'Couple Spa @ 1 PM', desc: 'Relaxing spa session together at Kirti Nagar' },
+                bed: { icon: '🛏️', title: 'Breakfast in Bed', desc: 'Special delivery from me (Need Mamta\'s number! 📱)' }
+            },
+            afternoon: {
+                shopping: { icon: '🛍️', title: 'Shopping Date', desc: 'Let\'s shop together and find amazing things!' },
+                arcade: { icon: '🎮', title: 'Arcade Date', desc: 'Fun games and lots of laughter together' },
+                movie: { icon: '🎬', title: 'Movie Date', desc: 'Popcorn, good movie & cuddles' },
+                dev: { icon: '😏', title: 'Dev Place', desc: 'So you can miss your date 😉' }
+            },
+            evening: {
+                dinner: { icon: '🍽️', title: 'Romantic Dinner', desc: 'Candles, music & delicious food around 5 PM' },
+                rooftop: { icon: '🌆', title: 'Rooftop Celebration', desc: 'Beautiful sunset views with special setup' },
+                party: { icon: '🎉', title: 'Surprise Party', desc: 'Friends, cake & big celebration!' },
+                cozy: { icon: '🕯️', title: 'Cozy Home Evening', desc: 'Just us two, cake & quality time' }
+            },
+            cake: {
+                elegant: { icon: '👑', title: 'Elegant Multi-Tier', desc: 'Stunning fondant masterpiece' },
+                chocolate: { icon: '🍫', title: 'Chocolate Heaven', desc: 'Decadent chocolate indulgence' },
+                fruit: { icon: '🍓', title: 'Fresh Fruit Cake', desc: 'Light & refreshing with berries' },
+                custom: { icon: '🎨', title: 'Custom Design', desc: 'One-of-a-kind themed creation' },
+                cupcakes: { icon: '🧁', title: 'Cupcake Tower', desc: 'Variety of delicious flavors' }
+            },
+            guests: {
+                intimate: { icon: '💕', title: 'Intimate Circle', desc: '5-10 closest friends' },
+                medium: { icon: '🎊', title: 'Medium Group', desc: '15-30 good friends' },
+                big: { icon: '🎉', title: 'Big Bash', desc: '50+ people - everyone invited!' },
+                solo: { icon: '✨', title: 'Solo Celebration', desc: 'Just you - ultimate me-time' }
+            },
+            dress: {
+                formal: { icon: '👠', title: 'Glamorous', desc: 'Full glam with formal attire' },
+                cocktail: { icon: '💃', title: 'Cocktail Chic', desc: 'Stylish yet comfortable' },
+                casual: { icon: '👕', title: 'Casual Cool', desc: 'Relaxed and comfy vibes' },
+                theme: { icon: '🎭', title: 'Themed Costume', desc: 'Fun creative themed outfits' }
+            }
+        };
+
+        function selectOption(category, option, element) {
+            if (!isBirthdayStarted()) {
+                showLockedMessage();
+                return;
+            }
+            
+            // Remove selection from siblings
+            const siblings = element.parentElement.querySelectorAll('.option-card');
+            siblings.forEach(card => card.classList.remove('selected'));
+            
+            // Add selection to clicked element
+            element.classList.add('selected');
+            
+            // Store selection
+            birthdayPlan[category] = option;
+        }
+
+        function generatePlan() {
+            if (!isBirthdayStarted()) {
+                showLockedMessage();
+                return;
+            }
+            
+            // Check if all categories are selected
+            const allSelected = Object.values(birthdayPlan).every(val => val !== null);
+            
+            if (!allSelected) {
+                alert('Please select one option from each category! 🎉');
+                return;
+            }
+
+            // Generate summary
+            const summaryDiv = document.getElementById('planSummary');
+            let summaryHTML = '<h3>🎊 Your Perfect Birthday Plan! 🎊</h3>';
+            
+            const categories = [
+                { key: 'morning', label: 'Morning' },
+                { key: 'afternoon', label: 'Afternoon' },
+                { key: 'evening', label: 'Evening' },
+                { key: 'cake', label: 'Cake' },
+                { key: 'guests', label: 'Guest List' },
+                { key: 'dress', label: 'Dress Code' }
+            ];
+
+            categories.forEach(cat => {
+                const selection = birthdayPlan[cat.key];
+                const details = planDetails[cat.key][selection];
+                summaryHTML += `
+                    <div class="summary-item">
+                        <span class="summary-icon">${details.icon}</span>
+                        <div class="summary-text">
+                            <div class="summary-category">${cat.label}: ${details.title}</div>
+                            <div class="summary-choice">${details.desc}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            summaryHTML += `
+                <div style="text-align: center; margin-top: 20px; padding: 20px; background: white; border-radius: 15px;">
+                    <p style="font-size: 1.3rem; color: #f5576c; font-weight: bold; margin-bottom: 15px;">
+                        This is going to be AMAZING! 🌟
+                    </p>
+                    <p style="color: #666; font-size: 1.1rem;">
+                        Your perfect birthday is all planned out. Now go make these memories! 💖
+                    </p>
+                </div>
+            `;
+
+            summaryDiv.innerHTML = summaryHTML;
+            summaryDiv.classList.add('show');
+            
+            // Scroll to summary
+            setTimeout(() => {
+                summaryDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+            
+            launchConfetti();
+        }
+
+        function resetPlanner() {
+            if (!isBirthdayStarted()) {
+                showLockedMessage();
+                return;
+            }
+            
+            // Clear selections
+            birthdayPlan = {
+                morning: null,
+                afternoon: null,
+                evening: null,
+                cake: null,
+                guests: null,
+                dress: null
+            };
+            
+            // Remove all selected classes
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Hide summary
+            document.getElementById('planSummary').classList.remove('show');
+            
+            // Scroll to top
+            document.getElementById('planner').scrollTop = 0;
+        }
+
+        // Music
+        function playSong(songName) {
+            if (!isBirthdayStarted()) {
+                showLockedMessage();
+                return;
+            }
+            
+            alert(`🎵 Now playing: ${songName}! 🎵\n\nDance like nobody's watching! 💃`);
+            launchConfetti();
+        }
+
+        // Memory Game
+        const emojis = ['🎂', '🎁', '🎈', '🎉', '🎊', '🌟', '💖', '🎵'];
+        let gameCards = [...emojis, ...emojis];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let moves = 0;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function createGameBoard() {
+            const board = document.getElementById('gameBoard');
+            board.innerHTML = '';
+            gameCards = shuffleArray([...emojis, ...emojis]);
+            
+            gameCards.forEach((emoji, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.dataset.emoji = emoji;
+                card.dataset.index = index;
+                card.textContent = '❓';
+                card.addEventListener('click', flipCard);
+                board.appendChild(card);
+            });
+        }
+
+        function flipCard() {
+            if (!isBirthdayStarted()) {
+                showLockedMessage();
+                return;
+            }
+            
+            if (flippedCards.length >= 2 || this.classList.contains('flipped') || this.classList.contains('matched')) return;
+            
+            this.classList.add('flipped');
+            this.textContent = this.dataset.emoji;
+            flippedCards.push(this);
+            
+            if (flippedCards.length === 2) {
+                moves++;
+                document.getElementById('moves').textContent = moves;
+                checkMatch();
+            }
+        }
+
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            
+            if (card1.dataset.emoji === card2.dataset.emoji) {
+                card1.classList.add('matched');
+                card2.classList.add('matched');
+                matchedPairs++;
+                document.getElementById('matches').textContent = matchedPairs;
+                flippedCards = [];
+                
+                if (matchedPairs === 8) {
+                    setTimeout(() => {
+                        alert('🎉 Congratulations! You won! 🎉');
+                        launchConfetti();
+                    }, 500);
+                }
+            } else {
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                    card1.textContent = '❓';
+                    card2.textContent = '❓';
+                    flippedCards = [];
+                }, 1000);
+            }
+        }
+
+        function resetGame() {
+            if (!isBirthdayStarted()) {
+                showLockedMessage();
+                return;
+            }
+            
+            flippedCards = [];
+            matchedPairs = 0;
+            moves = 0;
+            document.getElementById('moves').textContent = '0';
+            document.getElementById('matches').textContent = '0';
+            createGameBoard();
+        }
+
+        // Initialize
+        createHearts();
+        createGameBoard();
+        
+        // Only launch confetti if birthday has started
+        if (isBirthdayStarted()) {
+            launchConfetti();
+        }
+    </script>
+</body>
+</html>
+                
